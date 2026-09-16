@@ -1,0 +1,335 @@
+let students = [
+    { id: 101, name: "Aarav", marks: [78, 85, 90], feedback: "Excellent" },
+    { id: 102, name: "Diya", marks: [65, 72, 68], feedback: "Good" },
+    { id: 103, name: "Rohan", marks: [90, 88, 95], feedback: "Excellent" }
+];
+
+// 1. Calculate Total Marks
+
+function calculateTotal(marks) {
+    let total = 0;
+
+    for (let mark of marks) {
+        total = total + mark;
+    }
+
+    return total;
+}
+
+// 2. Calculate Average
+
+function calculateAverage(marks) {
+    if (marks.length === 0) {
+        return 0;
+    }
+
+    let total = calculateTotal(marks);
+
+    return total / marks.length;
+}
+
+// 3. Find Highest Performer
+
+function findHighestPerformer() {
+
+    if (students.length === 0) {
+        return null;
+    }
+
+    let highest = students[0];
+
+    for (let student of students) {
+
+        if (
+            calculateAverage(student.marks) >
+            calculateAverage(highest.marks)
+        ) {
+            highest = student;
+        }
+    }
+
+    return highest;
+}
+
+// 4. Search Student by ID
+
+function searchStudent(id) {
+
+    for (let student of students) {
+
+        if (student.id === id) {
+            return student;
+        }
+    }
+
+    return null;
+}
+
+// 5. Insert New Student
+
+function insertStudent(student) {
+    students.push(student);
+}
+
+// 6. Delete Student
+
+function deleteStudent(id) {
+
+    for (let i = 0; i < students.length; i++) {
+
+        if (students[i].id === id) {
+
+            students.splice(i, 1);
+
+            return true;
+        }
+    }
+
+    return false;
+}
+
+// 7. Traverse Marks
+
+function traverseMarks() {
+
+    for (let student of students) {
+
+        console.log(student.name);
+
+        for (let mark of student.marks) {
+            console.log(mark);
+        }
+    }
+}
+
+// 8. Character Frequency
+
+function characterFrequency() {
+
+    let frequency = {};
+
+    for (let student of students) {
+
+        let text = student.feedback.toLowerCase();
+
+        for (let char of text) {
+
+            // Ignore spaces
+            if (char === " ") {
+                continue;
+            }
+
+            if (frequency[char] === undefined) {
+                frequency[char] = 1;
+            }
+            else {
+                frequency[char]++;
+            }
+        }
+    }
+
+    return frequency;
+}
+
+// 9. Most Frequent Character
+
+function mostFrequentCharacter(frequency) {
+
+    let maxCharacter = "";
+    let maxCount = 0;
+
+    for (let char in frequency) {
+
+        if (frequency[char] > maxCount) {
+
+            maxCount = frequency[char];
+            maxCharacter = char;
+        }
+    }
+
+    return [maxCharacter, maxCount];
+}
+
+// 10. Divisibility
+
+function checkDivisibility(number) {
+
+    console.log("Number:", number);
+
+    console.log("Divisible by 2:", number % 2 === 0);
+    console.log("Divisible by 3:", number % 3 === 0);
+    console.log("Divisible by 5:", number % 5 === 0);
+    console.log("Divisible by 7:", number % 7 === 0);
+}
+
+// 11. Prime Number
+
+function isPrime(number) {
+
+    if (number < 2) {
+        return false;
+    }
+
+    for (let i = 2; i <= Math.sqrt(number); i++) {
+
+        if (number % i === 0) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+// 12. GCD
+
+function gcd(a, b) {
+
+    while (b !== 0) {
+
+        let remainder = a % b;
+
+        a = b;
+        b = remainder;
+    }
+
+    return Math.abs(a);
+}
+
+// 13. LCM
+
+function lcm(a, b) {
+
+    if (a === 0 || b === 0) {
+        return 0;
+    }
+
+    return Math.abs(a * b) / gcd(a, b);
+}
+
+// 14. Performance Pattern
+
+function performancePattern(n) {
+
+    for (let i = 1; i <= n; i++) {
+
+        let pattern = "";
+
+        for (let j = 1; j <= i; j++) {
+
+            pattern = pattern + "*";
+        }
+
+        console.log(pattern);
+    }
+}
+
+// 15. Reverse Marks In-Place
+
+function reverseMarks(marks) {
+
+    let left = 0;
+    let right = marks.length - 1;
+
+    while (left < right) {
+
+        let temp = marks[left];
+
+        marks[left] = marks[right];
+        marks[right] = temp;
+
+        left++;
+        right--;
+    }
+}
+
+// MAIN PROGRAM
+
+console.log("Student Performance Report");
+console.log("--------------------------");
+
+
+// Display total and average
+
+for (let student of students) {
+
+    let total = calculateTotal(student.marks);
+    let average = calculateAverage(student.marks);
+
+    console.log(
+        student.name +
+        " Total: " +
+        total +
+        " Average: " +
+        average.toFixed(2)
+    );
+}
+
+// Highest Performer
+
+let highest = findHighestPerformer();
+
+console.log("\nHighest Performer:", highest.name);
+
+// Character Frequency
+
+let frequency = characterFrequency();
+
+console.log("\nCharacter Frequency:");
+
+for (let char in frequency) {
+
+    console.log(char + " : " + frequency[char]);
+}
+
+// Most Frequent Character
+
+let mostFrequent = mostFrequentCharacter(frequency);
+
+console.log(
+    "\nMost Frequent Character:",
+    mostFrequent[0],
+    "->",
+    mostFrequent[1]
+);
+
+// Prime ID
+
+console.log("\nPrime ID:");
+
+for (let student of students) {
+
+    console.log(
+        student.id,
+        "->",
+        isPrime(student.id)
+    );
+}
+
+// Divisibility
+
+console.log("\nDivisibility:");
+
+checkDivisibility(101);
+
+// GCD and LCM
+
+let a = 12;
+let b = 18;
+
+console.log("\nGCD:", gcd(a, b));
+console.log("LCM:", lcm(a, b));
+
+
+// Performance Pattern
+
+console.log("\nPerformance Pattern:");
+
+performancePattern(5);
+
+// Reverse Marks
+
+console.log("\nBefore Reverse:", students[0].marks);
+
+reverseMarks(students[0].marks);
+
+console.log("After Reverse:", students[0].marks);
